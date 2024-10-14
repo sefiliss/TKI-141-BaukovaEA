@@ -27,9 +27,7 @@ int main(void)
     const double x = 1.825;
     const double y = 18.225;
     const double z = -3.298;
-    double a = GetA(x, y);
-    double b = GetB(x, y, z);
-    printf("Значение a = %lf\nЗначение b = %lf", a, b);
+    printf("Значение a = %lf\nЗначение b = %lf", GetA(x, y), GetB(x,y,z));
     return 0;
 
 }
