@@ -3,14 +3,6 @@
 #include <math.h>
 
 /**
- * @brief перечисление формул вычисления 
- */
-typedef enum {
-    PERIMETER,
-    AREA
-} CalculationOption;
-
-/**
  * @brief считывает вещественное число
  * @return вещественное число
  */
