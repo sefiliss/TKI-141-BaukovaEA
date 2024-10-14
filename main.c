@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 
+enum option
+{
+    PERIMETR = 1,
+    AREA = 2
+
+};
+
 /**
  * @brief считывает вещественное число
  * @return вещественное число
@@ -51,25 +58,26 @@ int ChoiceInput(void);
 int main(void)
 {
     puts("Введите первый катет");
-    const double cat1 = PositiveInput();
+    double cat1 = PositiveInput();
     puts("Введите второй катет");
-    const double cat2 = PositiveInput();
-    puts("Введите 0 для вычисления периметра или 1 для вычисления площади");
-    const int choice = ChoiceInput();
+    double cat2 = PositiveInput();
+    puts("Выберите операцию:\n1.Периметр\n2.Площадь");
+    int choice = ChoiceInput();
     
 
     switch (choice)
     {
-    case 0:
+    case PERIMETR:
         printf("Периметр треугольника равен %lf", GetP(cat1, cat2));
-        break;
-    
-    case 1:
+        return 0;
+
+    case AREA:
         printf("Площадь треугольника равна %lf", GetArea(cat1, cat2));
-        break;
+        return 0;
+        
     default:
         printf("Такой операции не существует");
-        break;
+        return 0;
     }
     return 0;
 }
