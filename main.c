@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 
+/**
+ * @brief перечисление опций вычисления
+ */
 enum option
 {
     PERIMETR = 1,
@@ -77,7 +80,7 @@ int main(void)
         
     default:
         printf("Такой операции не существует");
-        return 0;
+        return 1;
     }
     return 0;
 }
