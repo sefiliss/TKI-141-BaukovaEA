@@ -1,6 +1,7 @@
 ﻿#include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
+#include <stdbool.h>
 /**
  * @brief считывает вещественное число
  * @return вещественное число
@@ -14,15 +15,15 @@ double Input(void);
 double PositiveInput(void);
 
 /**
- * @brief высчитывает, пройдет ли кирпич в отверстие
+ * @brief определяет, пройдет ли кирпич в отверстие
  * @param x длина стороны x кирпича
  * @param y длина стороны y кирпича
  * @param z длина стороны z кирпича
  * @param r длина стороны r отверстия
  * @param s длина стороны s отверстия
- * @return ответ, пройдет ли кирпич в отверстие
+ * @return true, если кирпич проходит и false, если не проходит
  */
-double ifKirpichEnter(const double x, const double y, const double z, const double r, const double s);
+bool ifKirpichEnter(const double x, const double y, const double z, const double r, const double s);
 
 /**
  * @brief точка входа в пронрамму
@@ -40,9 +41,13 @@ int main(void)
     const double r = PositiveInput();
     puts("Введите длину стороны s отверстия ");
     const double s = PositiveInput();
-    double chek = ifKirpichEnter(x, y, z, r, s);
+    if (ifKirpichEnter(x, y, z, r, s) == true)
+    {
+        puts("Кирпич проходит в отверстие");
+        return 0;
+    };
+    puts("Кирпич не проходит в отверстие");
     return 0;
-
 }
 
 double Input(void)
@@ -67,18 +72,11 @@ double PositiveInput(void)
     return value;
 }
 
-double ifKirpichEnter(const double x, const double y, const double z, const double r, const double s)
+bool ifKirpichEnter(const double x, const double y, const double z, const double r, const double s)
 {
     if (x<=r && y<=s || x<=r && z<=s || y<=r && x<=s || y<=r && z<=s || z<=r && x<=s || z<=r && y<=s)
     {
-        puts("Кирпич проходит в отверстие");
-        return 0;
+        return true ;
     }
-    else
-    {
-        puts("Кирпич не проходит в отверстие");
-        return 0;
-    }
-
-    return 0;
+    return false;
 }
