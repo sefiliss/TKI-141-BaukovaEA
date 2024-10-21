@@ -10,13 +10,10 @@ double Input(void);
 
 /**
  * @brief вычисляет функцию
- * @param x конствнта из введенного интервала
- * @param start начало интервала
- * @param step шаг в интервале
- * @param end конец интервала
+ * @param x константа из введенного интервала
  * @return значение функции
  */
-double y(double x);
+double y(const double x);
 
 /**
  * @brief точка входа в программу
@@ -24,7 +21,6 @@ double y(double x);
  */
 int main(void)
 {
-    double x;
     puts("Введите начало интервала:");
     double start = Input();
     puts("Введите конец интервала:");
@@ -32,7 +28,7 @@ int main(void)
     puts("Введите шаг:");
     double step = Input();
     printf("x\ty\n");
-    for (x = start; x <= end; x += step)
+    for (double x = start; x < (end + step); x += step)
     {
         printf("%lf\t%lf\n", x, y(x));
     }
@@ -50,7 +46,7 @@ double Input(void)
     return value;
 }
 
-double y(double x)
+double y(const double x)
 {
     return 0.29 * pow(x, 3) + x - 1.2502;   
 }
