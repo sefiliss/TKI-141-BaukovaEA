@@ -1,7 +1,16 @@
 ﻿#include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include <stdbool.h>
+#include<stdbool.h>
+#include<float.h>
+
+/**
+ * @brief проверяет на равенство нулю через эпсилан
+ * @param value число, введенное пользователем и сравниваемое с нулем
+ * @return true если равно нулю, false если не равно нулю
+ */
+bool equalstozero(const double value);
+
 /**
  * @brief считывает вещественное число
  * @return вещественное число
@@ -52,6 +61,11 @@ int main(void)
     return 0;
 }
 
+bool equalstozero(const double value)
+{
+    return (fabs(value)<DBL_EPSILON);
+}
+
 double Input(void)
 {
     double value = 0.0;
@@ -66,7 +80,7 @@ double Input(void)
 double PositiveInput(void)
 {
     double value = Input();
-    if (value < 0)
+    if ((value < 0) || equalstozero(value))
     {
         puts("Некорректное значение длины");
         exit(EXIT_FAILURE);
