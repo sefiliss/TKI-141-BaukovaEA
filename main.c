@@ -41,12 +41,14 @@ int main(void)
     const double r = PositiveInput();
     puts("Введите длину стороны s отверстия ");
     const double s = PositiveInput();
-    if (ifKirpichEnter(x, y, z, r, s) == true)
+    if (ifKirpichEnter(x, y, z, r, s))
     {
         puts("Кирпич проходит в отверстие");
-        return 0;
-    };
-    puts("Кирпич не проходит в отверстие");
+    }
+    else 
+    {
+        puts("Кирпич не проходит в отверстие");
+    }
     return 0;
 }
 
@@ -64,7 +66,7 @@ double Input(void)
 double PositiveInput(void)
 {
     double value = Input();
-    if (value <= 0)
+    if (value < 0)
     {
         puts("Некорректное значение длины");
         exit(EXIT_FAILURE);
@@ -74,9 +76,5 @@ double PositiveInput(void)
 
 bool ifKirpichEnter(const double x, const double y, const double z, const double r, const double s)
 {
-    if (x<=r && y<=s || x<=r && z<=s || y<=r && x<=s || y<=r && z<=s || z<=r && x<=s || z<=r && y<=s)
-    {
-        return true ;
-    }
-    return false;
+    return (x<=r && y<=s || x<=r && z<=s || y<=r && x<=s || y<=r && z<=s || z<=r && x<=s || z<=r && y<=s);
 }
