@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 /**
  * @brief перечисление опций вычисления
@@ -101,7 +102,7 @@ double Input(void)
 double PositiveInput(void)
 {
     double value = Input();
-    if (value <= 0)
+    if (value <= DBL_EPSILON)
     {
         printf("Неккоректное значение катета");
         exit(EXIT_FAILURE);
