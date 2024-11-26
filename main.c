@@ -1,18 +1,32 @@
 ﻿#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <float.h>
 
 /**
  * @brief считывает целое число
  * @return целое число
  */
-int Input(void);
+int dinput(void);
 
 /**
  * @brief считывает целое число и проверяет знак
  * @return целое число, если оно положительное
  */
-int PositiveInput(void);
+int dpositiveinput(void);
+
+/**
+ * @brief считывает вещественное число
+ * @return вещественное число
+ */
+double finput(void);
+
+/**
+ * @brief считывает вещественное число и проверяет знак
+ * @return вещественное число, если оно положительное
+ */
+double fpositiveinput(void);
+
 /**
  * @brief вычисление k-того элемента с помощью k-1 элемета
  * @param current k-1 элемент
@@ -27,27 +41,56 @@ double GetElement(const double current, int k);
  */
 int main(void)
 {
-    const int start = 1;
-    puts("Введите количество n");
-    const int end = PositiveInput();
-    const double zeroelement = 1;
+    puts("Введите n");
+    const int end = dpositiveinput();
+    const double zeroelement = 1.0;
     double current = zeroelement;
-    double sum = zeroelement;
-    for (int i = start; i <= end; i++)
+    double sumA = zeroelement;
+    for (int i = 1; i <= end; i++)
     {
         current = GetElement(current, i);
-        sum += current;
+        sumA += current;
     }
-    
-    printf("%lf", sum);
+    puts("Введите значение числа e");
+    const double eps = fpositiveinput();
+    double sumB = zeroelement;
+    for (int i = 1; current > eps; i++)
+    {
+        current = GetElement(current, i);
+        sumB += current;
+    }
+    printf("%lf/n", sumA);
+    printf("%lf/n", sumB);
     
     return 0;
 }
 
-int Input(void)
+int dinput(void)
 {
     int value = 0;
     if(scanf("%d", &value) != 1)
+    {
+        puts("Не является целым числом");
+        exit(EXIT_FAILURE);
+    }
+    return value;
+}
+
+int dpositiveinput(void)
+{
+    int value =  dinput();
+    if (value <= 0)
+    {
+        puts("Не является целым положительным числом");
+        exit(EXIT_FAILURE);
+    }
+    return value;
+}
+
+double finput(void)
+{
+    double value = 0.0;
+    if (scanf("%lf", &value) != 1)
     {
         puts("Не является числом");
         exit(EXIT_FAILURE);
@@ -55,12 +98,12 @@ int Input(void)
     return value;
 }
 
-int PositiveInput(void)
+double fpositiveinput(void)
 {
-    int value =  Input();
-    if (value <= 0)
+    double value = finput();
+    if (value <= DBL_EPSILON)
     {
-        puts("Не является числом");
+        puts("Не является положительным числом");
         exit(EXIT_FAILURE);
     }
     return value;
