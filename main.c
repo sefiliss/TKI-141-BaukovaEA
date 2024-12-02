@@ -7,25 +7,25 @@
  * @brief считывает целое число
  * @return целое число
  */
-int dinput(void);
+int DInput(void);
 
 /**
  * @brief считывает целое число и проверяет знак
  * @return целое число, если оно положительное
  */
-int dpositiveinput(void);
+int DPositiveInput(void);
 
 /**
  * @brief считывает вещественное число
  * @return вещественное число
  */
-double finput(void);
+double FInput(void);
 
 /**
  * @brief считывает вещественное число и проверяет знак
  * @return вещественное число, если оно положительное
  */
-double fpositiveinput(void);
+double FPositiveInput(void);
 
 /**
  * @brief вычисление k-того элемента с помощью k-1 элемета
@@ -33,7 +33,7 @@ double fpositiveinput(void);
  * @param k номер вычисляемого элемента
  * @return k-тый элемент
  */
-double GetElement(const double current, int k);
+double GetElement(int k);
 
 /**
  * @brief точка входа в программу
@@ -42,30 +42,30 @@ double GetElement(const double current, int k);
 int main(void)
 {
     puts("Введите n");
-    const int end = dpositiveinput();
+    const int end = DPositiveInput();
     const double zeroelement = 1.0;
     double current = zeroelement;
-    double sumA = zeroelement;
+    double sumA = 0.0;
     for (int i = 1; i <= end; i++)
     {
-        current = GetElement(current, i);
         sumA += current;
+        current *= GetElement(i);
     }
     puts("Введите значение числа e");
-    const double eps = fpositiveinput();
-    double sumB = zeroelement;
-    for (int i = 1; current > eps; i++)
+    const double eps = FPositiveInput();
+    double sumB = 0.0;
+    current = zeroelement;
+    for (int i = 1; fabs(current) >= eps; i++)
     {
-        current = GetElement(current, i);
         sumB += current;
+        current *= GetElement(i);
     }
-    printf("%lf/n", sumA);
-    printf("%lf/n", sumB);
+    printf("%lf\n%lf\n", sumA, sumB);
     
     return 0;
 }
 
-int dinput(void)
+int DInput(void)
 {
     int value = 0;
     if(scanf("%d", &value) != 1)
@@ -76,9 +76,9 @@ int dinput(void)
     return value;
 }
 
-int dpositiveinput(void)
+int DPositiveInput(void)
 {
-    int value =  dinput();
+    int value =  DInput();
     if (value <= 0)
     {
         puts("Не является целым положительным числом");
@@ -87,7 +87,7 @@ int dpositiveinput(void)
     return value;
 }
 
-double finput(void)
+double FInput(void)
 {
     double value = 0.0;
     if (scanf("%lf", &value) != 1)
@@ -98,9 +98,9 @@ double finput(void)
     return value;
 }
 
-double fpositiveinput(void)
+double FPositiveInput(void)
 {
-    double value = finput();
+    double value = FInput();
     if (value <= DBL_EPSILON)
     {
         puts("Не является положительным числом");
@@ -109,7 +109,7 @@ double fpositiveinput(void)
     return value;
 }
 
-double GetElement(const double current, int k)
+double GetElement(int k)
 {
-    return current * ((-1)/(pow(k, 2)+k));
+    return (-1)/(pow(k, 2)+k);
 }
