@@ -30,19 +30,49 @@ int DInput(void);
 int DPositiveInput(void);
 
 /**
+ * @brief создает массив
+ * @param n длина массива
+ * @return указатель на первый элемент массива
+ */
+int* CreateArray(const int n);
+
+/**
+ * @brief заполняет массив случайными целыми числами
+ * @param array массив
+ * @param n длина массива
+ * @param max максимальное значение числа в массиве
+ * @param min минимальное значение числа в массиве
+ */
+void FillRandom(int* array, const int n, const int max, const int min);
+
+/**
+ * @brief заполняет массив целыми числами, которые ввел пользователь
+ * @param array массив
+ * @param n длина массива
+ */
+void FillManually(int* array, const int n);
+
+/**
+ * @brief выводит массив на экран
+ * @param array массив
+ * @param n длина массива
+ */
+void PrintArray(int* array, const int n);
+
+/**
   @brief Вычисляет произведение четных элементов массива
   @param array указатель на массив
   @param n количество элементов
   @return произведение четных элементов
  */
-int ProductOfEven(int* array, int n);
+int ProductOfEven(int* array, const int n);
 
 /**
   @brief Заменяет элементы массива с нечетными индексами на квадраты индексов
   @param array указатель на массив
   @param n количество элементов
  */
-void ReplaceIndexWithSquares(int* array, int n);
+int* ReplaceIndexWithSquares(int* array,const int n);
 
 /**
   @brief Проверяет наличие положительных элементов, делящихся на k с остатком 2
@@ -51,7 +81,7 @@ void ReplaceIndexWithSquares(int* array, int n);
   @param k значение для проверки
   @return true, если такие элементы есть, и false, если нет
  */
-bool HasPositive(int* array, int n, int k);
+bool HasPositive(int* array, const int n, const int k);
 
 /**
  * @brief точка входа в программу
@@ -61,12 +91,7 @@ int main(void)
 {
     puts("Введите количество элементов n массива:");
     const int n = DPositiveInput();
-    int* array = (int*)malloc(n * sizeof(int));
-    if (array == NULL)
-    {
-        puts("Ошибка выделения памяти");
-        exit(EXIT_FAILURE);
-    }
+    int* array = CreateArray(n);
     puts("Способ заполнения массива\n1.Рандомные числа\n2.Вручную");
     int choice = DPositiveInput();
 
@@ -80,20 +105,12 @@ int main(void)
             if (min>max)
             {
                 puts("Неверное значение промежутка");
-                return 1;
+                exit(EXIT_FAILURE);
             }
-            srand(time(NULL));
-            for (int i = 0; i < n-1; i++)
-            {
-                array[i] = rand() % (max-min+1) + min;
-            }
+            FillRandom(array, n, max, min);
             break;
         case MANUAL:
-            for (int i = 0; i < n; i++)
-            {
-                printf("\nВведите элемент массива номер %d\n", i+1);
-                array[i] = DInput();
-            }
+            FillManually(array, n);
             break;
         default:
             puts("Такой операции не существует");
@@ -101,19 +118,12 @@ int main(void)
 
     }
     puts("Содержимое массива: ");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", array[i]);
-    }
-    printf("\n");
+    PrintArray(array, n);
     int product = ProductOfEven(array, n);
     printf("Произведение четных элементов: %d\n", product);
-    ReplaceIndexWithSquares(array, n);
+    int* newarray = ReplaceIndexWithSquares(array, n);
     printf("Массив после замены элементов с нечетными индексами на квадраты индексов:");
-    for (int i = 0; i < n; i++) 
-    {
-        printf("%d ", array[i]);
-    }
-    printf("\n");
+    PrintArray(newarray, n);
     puts("Введите число k");
     int k = DPositiveInput();
     if (HasPositive(array, n, k))
@@ -123,6 +133,7 @@ int main(void)
     {
         printf("Положительные элементы, делящиеся на %d с остатком 2, не найдены", k);
     }
+    free(array);
     return 0;
 }
 
@@ -150,11 +161,49 @@ int DPositiveInput(void)
     return value;
 }
 
+int* CreateArray(const int n)
+{
+    int* array = (int*)malloc(n * sizeof(int));
+    if (array == NULL)
+    {
+        puts("Ошибка выделения памяти");
+        exit(EXIT_FAILURE);
+    }
+    return array;
+}
+
+void FillRandom(int *array, const int n, const int max, const int min)
+{
+    srand(time(NULL));
+    for (size_t i = 0; i < n; i++)
+    {
+        array[i] = rand() % (max-min+1) + min;
+    }
+}
+
+void FillManually(int *array, const int n)
+{
+    for (size_t i = 0; i < n; i++)
+    {
+        printf("\nВведите элемент массива номер %zu\n", i+1);
+        array[i] = DInput();
+    }
+}
+
+void PrintArray(int *array, const int n)
+{
+    for (size_t i = 0; i < n; i++) 
+    {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+
 int ProductOfEven(int* array, int n)
 {
     int product = 1;
     int haseven = 0;
-    for (int i = 0; i<n; i++)
+    for (size_t i = 0; i<n; i++)
     {
         if (array[i]%2 == 0)
         {
@@ -170,17 +219,26 @@ int ProductOfEven(int* array, int n)
     return product;
 }
 
-void ReplaceIndexWithSquares(int* array, int n)
+int* ReplaceIndexWithSquares(int* array, int n)
 {
-    for (int i = 1; i < n; i += 2)
+    int* newarray = CreateArray(n);
+    for (size_t i = 0; i < n; i++)
     { 
-        array[i] = i*i;
+        if(i%2 != 0)
+        {
+            newarray[i] = i*i;
+        }
+        else
+        {
+            newarray[i] = array[i];
+        }
     }
+    return newarray;   
 }
 
 bool HasPositive(int* array, int n, int k)
 {
-    for (int i = 0; i < n; i++) 
+    for (size_t i = 0; i < n; i++) 
     {
         if (array[i] > 0 && array[i] % k == 2) 
         {
