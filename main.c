@@ -92,7 +92,7 @@ int main(void)
     puts("Введите количество элементов n массива:");
     const int n = DPositiveInput();
     int* array = CreateArray(n);
-    puts("Способ заполнения массива\n1.Рандомные числа\n2.Вручную");
+    printf("Способ заполнения массива\n%d-Рандомные числа\n%d-Вручную\n",RANDOM, MANUAL);
     int choice = DPositiveInput();
 
     switch(choice)
@@ -114,13 +114,21 @@ int main(void)
             break;
         default:
             puts("Такой операции не существует");
+            free(array);
             exit(EXIT_FAILURE);
 
     }
     puts("Содержимое массива: ");
     PrintArray(array, n);
     int product = ProductOfEven(array, n);
-    printf("Произведение четных элементов: %d\n", product);
+    if (product == 1)
+    {
+        puts("В массиве нет четных элементов");
+    }
+    else
+    {
+        printf("Произведение четных элементов: %d\n", product);
+    }
     int* newarray = ReplaceIndexWithSquares(array, n);
     printf("Массив после замены элементов с нечетными индексами на квадраты индексов:");
     PrintArray(newarray, n);
@@ -134,6 +142,7 @@ int main(void)
         printf("Положительные элементы, делящиеся на %d с остатком 2, не найдены", k);
     }
     free(array);
+    free(newarray);
     return 0;
 }
 
@@ -213,7 +222,6 @@ int ProductOfEven(int* array, int n)
     }
     if (haseven == 0)
     {
-        puts("Нет четных элементов");
         return 1;
     }
     return product;
