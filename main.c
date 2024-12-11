@@ -89,6 +89,15 @@ int* AddKInArray(int* array, const int n, const int k);
  * @return количество элементов оканчиватся на число К
  */
 int HowManyK(int* array, const int n, const int k);
+
+/**
+ * @brief создает новый массив A
+ * @param n длина массива
+ * @param array указатель на массив D
+ * @return массив A
+ */
+int* ArrayA(const int n, int* array);
+
 /**
  * @brief точка входа в программу
  * @return 0 в случае успеха
@@ -98,7 +107,7 @@ int main(void)
     puts("Введите количество элементов n массива:");
     const int n = DPositiveInput();
     int* array = CreateArray(n);
-    puts("Способ заполнения массива\n1.Рандомные числа\n2.Вручную");
+    printf("Способ заполнения массива\n%d.Рандомные числа\n%d.Вручную\n", RANDOM, MANUAL);
     int choice = DPositiveInput();
     switch(choice)
     {
@@ -137,7 +146,13 @@ int main(void)
     int* arraywithk = AddKInArray(array, n, k);
     puts("Новый массив с K: ");
     PrintArray(arraywithk, (n+(HowManyK(array, n, k)*2)));
-
+    int* arrayA = ArrayA(n, array);
+    puts("Массив А: ");
+    PrintArray(arrayA, n);
+    free(array);
+    free(arraywithk);
+    free(arrayA);
+    free(replacearray);
     return 0;
 }
 
@@ -268,4 +283,21 @@ int HowManyK(int *array, const int n, const int k)
         }
     }
     return count;
+}
+
+int* ArrayA(const int n, int* array)
+{
+   int* arrayA = CreateArray(n);
+   for (size_t i = 0; i<n; i++)
+   {
+    if (i%2 == 0)
+    {
+        arrayA[i] = i*array[i]*array[i];
+    }
+    else
+    {
+        arrayA[i] = array[i]/(i-1);
+    }
+   }
+   return arrayA;
 }
