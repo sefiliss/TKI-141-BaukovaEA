@@ -27,14 +27,14 @@ int DInput(void);
  * @brief считывает целое число и проверяет знак
  * @return целое положительное число
  */
-int DPositiveInput(void);
+size_t DPositiveInput(void);
 
 /**
  * @brief создает массив
  * @param n длина массива
  * @return указатель на первый элемент массива
  */
-int* CreateArray(const int n);
+int* CreateArray(const size_t n);
 
 /**
  * @brief заполняет массив случайными целыми числами
@@ -43,21 +43,21 @@ int* CreateArray(const int n);
  * @param max максимальное значение числа в массиве
  * @param min минимальное значение числа в массиве
  */
-void FillRandom(int* array, const int n, const int max, const int min);
+void FillRandom(int* array, const size_t n, const int max, const int min);
 
 /**
  * @brief заполняет массив целыми числами, которые ввел пользователь
  * @param array массив
  * @param n длина массива
  */
-void FillManually(int* array, const int n);
+void FillManually(int* array, const size_t n);
 
 /**
  * @brief выводит массив на экран
  * @param array массив
  * @param n длина массива
  */
-void PrintArray(int* array, const int n);
+void PrintArray(int* array, const size_t n);
 
 /**
   @brief Вычисляет произведение четных элементов массива
@@ -65,14 +65,14 @@ void PrintArray(int* array, const int n);
   @param n количество элементов
   @return произведение четных элементов
  */
-int ProductOfEven(int* array, const int n);
+int ProductOfEven(int* array, const size_t n);
 
 /**
   @brief Заменяет элементы массива с нечетными индексами на квадраты индексов
   @param array указатель на массив
   @param n количество элементов
  */
-int* ReplaceIndexWithSquares(int* array,const int n);
+int* ReplaceIndexWithSquares(int* array,const size_t n);
 
 /**
   @brief Проверяет наличие положительных элементов, делящихся на k с остатком 2
@@ -81,7 +81,7 @@ int* ReplaceIndexWithSquares(int* array,const int n);
   @param k значение для проверки
   @return true, если такие элементы есть, и false, если нет
  */
-bool HasPositive(int* array, const int n, const int k);
+bool HasPositive(int* array, const size_t n, const int k);
 
 /**
  * @brief точка входа в программу
@@ -90,10 +90,10 @@ bool HasPositive(int* array, const int n, const int k);
 int main(void)
 {
     puts("Введите количество элементов n массива:");
-    const int n = DPositiveInput();
+    const size_t n = DPositiveInput();
     int* array = CreateArray(n);
     printf("Способ заполнения массива\n%d-Рандомные числа\n%d-Вручную\n",RANDOM, MANUAL);
-    int choice = DPositiveInput();
+    int choice = DInput();
 
     switch(choice)
     {
@@ -133,7 +133,7 @@ int main(void)
     printf("Массив после замены элементов с нечетными индексами на квадраты индексов:");
     PrintArray(newarray, n);
     puts("Введите число k");
-    int k = DPositiveInput();
+    int k = (int)DPositiveInput();
     if (HasPositive(array, n, k))
     {
         printf("Найдены положительные элементы, делящиеся на %d с остатком 2",k);
@@ -159,7 +159,7 @@ int DInput(void)
     return value;
 }
 
-int DPositiveInput(void)
+size_t DPositiveInput(void)
 {
     int value = DInput();
     if(value <= 0)
@@ -167,10 +167,10 @@ int DPositiveInput(void)
         puts("Не является целым положительным числом");
         exit(EXIT_FAILURE);
     }
-    return value;
+    return (size_t)value;
 }
 
-int* CreateArray(const int n)
+int* CreateArray(const size_t n)
 {
     int* array = (int*)malloc(n * sizeof(int));
     if (array == NULL)
@@ -181,7 +181,7 @@ int* CreateArray(const int n)
     return array;
 }
 
-void FillRandom(int *array, const int n, const int max, const int min)
+void FillRandom(int *array, const size_t n, const int max, const int min)
 {
     srand(time(NULL));
     for (size_t i = 0; i < n; i++)
@@ -190,7 +190,7 @@ void FillRandom(int *array, const int n, const int max, const int min)
     }
 }
 
-void FillManually(int *array, const int n)
+void FillManually(int *array, const size_t n)
 {
     for (size_t i = 0; i < n; i++)
     {
@@ -199,7 +199,7 @@ void FillManually(int *array, const int n)
     }
 }
 
-void PrintArray(int *array, const int n)
+void PrintArray(int *array, const size_t n)
 {
     for (size_t i = 0; i < n; i++) 
     {
@@ -208,7 +208,7 @@ void PrintArray(int *array, const int n)
     printf("\n");
 }
 
-int ProductOfEven(int* array, int n)
+int ProductOfEven(int* array, const size_t n)
 {
     int product = 1;
     int haseven = 0;
@@ -227,7 +227,7 @@ int ProductOfEven(int* array, int n)
     return product;
 }
 
-int* ReplaceIndexWithSquares(int* array, int n)
+int* ReplaceIndexWithSquares(int* array, const size_t n)
 {
     int* newarray = CreateArray(n);
     for (size_t i = 0; i < n; i++)
@@ -244,7 +244,7 @@ int* ReplaceIndexWithSquares(int* array, int n)
     return newarray;   
 }
 
-bool HasPositive(int* array, int n, int k)
+bool HasPositive(int* array, const size_t n, int k)
 {
     for (size_t i = 0; i < n; i++) 
     {
