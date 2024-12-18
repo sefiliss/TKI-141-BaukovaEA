@@ -26,14 +26,20 @@ int DInput(void);
  * @brief считывает целое число и проверяет знак
  * @return целое положительное число
  */
-int DPositiveInput(void);
+size_t DPositiveInput(void);
+
+/**
+ * @brief считывает целое число и проверяет соответствие промежутку ё
+ * @return целое число от 0 до 9
+ */
+int DKInput(void);
 
 /**
  * @brief создает массив
  * @param n длина массива
  * @return указатель на первый элемент массива
  */
-int* CreateArray(const int n);
+int* CreateArray(const size_t n);
 
 /**
  * @brief заполняет массив случайными целыми числами
@@ -42,21 +48,21 @@ int* CreateArray(const int n);
  * @param max максимальное значение числа в массиве
  * @param min минимальное значение числа в массиве
  */
-void FillRandom(int* array, const int n, const int max, const int min);
+void FillRandom(int* array, const size_t n, const int max, const int min);
 
 /**
  * @brief заполняет массив целыми числами, которые ввел пользователь
  * @param array массив
  * @param n длина массива
  */
-void FillManually(int* array, const int n);
+void FillManually(int* array, const size_t n);
 
 /**
  * @brief выводит массив на экран
  * @param array массив
  * @param n длина массива
  */
-void PrintArray(int* array, const int n);
+void PrintArray(const int* array, const size_t n);
 
 /**
  * @brief находит максимальный модуль в массиве
@@ -64,7 +70,7 @@ void PrintArray(int* array, const int n);
  * @param n длина массива
  * @return максимальный модуль
  */
-int FindMaxAbs(int* array, int n);
+int FindMaxAbs(const int* array, const size_t n);
 
 /**
  * @brief заменяет предпоследний элемент максимальным модулем из массива
@@ -72,7 +78,7 @@ int FindMaxAbs(int* array, int n);
  * @param n длина массива
  * @return указатель на первый элемент массива с замененным элементом
  */
-int* ReplacePenult(int* array, const int n);
+int* ReplacePenult(const int* array, const size_t n);
 /**
  * @brief вставляет элемент со значением К до и после всех элементов, заканчивающихся на цифру К
  * @param array указатель на массив
@@ -80,7 +86,7 @@ int* ReplacePenult(int* array, const int n);
  * @param k заданное число 
  * @return указатель на первый элемент массива с добавленными К
  */
-int* AddKInArray(int* array, const int n, const int k);
+int* AddKInArray(const int* array, const size_t n, const int k);
 /**
  * @brief вычисляет, сколько элементов оканчиватся на число К
  * @param array указатель на массив
@@ -88,7 +94,7 @@ int* AddKInArray(int* array, const int n, const int k);
  * @param k заданное число
  * @return количество элементов оканчиватся на число К
  */
-int HowManyK(int* array, const int n, const int k);
+int HowManyK(const int* array, const size_t n, const int k);
 
 /**
  * @brief создает новый массив A
@@ -96,7 +102,7 @@ int HowManyK(int* array, const int n, const int k);
  * @param array указатель на массив D
  * @return массив A
  */
-int* ArrayA(const int n, int* array);
+int* ArrayA(const size_t n, const int* array);
 
 /**
  * @brief точка входа в программу
@@ -105,10 +111,10 @@ int* ArrayA(const int n, int* array);
 int main(void)
 {
     puts("Введите количество элементов n массива:");
-    const int n = DPositiveInput();
-    int* array = CreateArray(n);
+    const size_t n = DPositiveInput();
+    const int* array = CreateArray(n);
     printf("Способ заполнения массива\n%d.Рандомные числа\n%d.Вручную\n", RANDOM, MANUAL);
-    int choice = DPositiveInput();
+    int choice = DInput();
     switch(choice)
     {
         case RANDOM:
@@ -128,25 +134,21 @@ int main(void)
             break;
         default:
             puts("Такой операции не существует");
+            free(array);
             exit(EXIT_FAILURE);
 
     }
     puts("Содержимое массива: ");
     PrintArray(array, n);
-    int* replacearray = ReplacePenult(array, n);
+    const int* replacearray = ReplacePenult(array, n);
     puts("Массив после замены предпоследнего элемента: ");
     PrintArray(replacearray, n);
     puts("Введите значение k от 0 до 9");
-    const int k = DPositiveInput();
-    if (k < 0 || k > 9)
-    {
-        puts("Неверное значение k");
-        exit(EXIT_FAILURE);
-    }
-    int* arraywithk = AddKInArray(array, n, k);
+    const int k = DKInput();
+    const int* arraywithk = AddKInArray(array, n, k);
     puts("Новый массив с K: ");
     PrintArray(arraywithk, (n+(HowManyK(array, n, k)*2)));
-    int* arrayA = ArrayA(n, array);
+    const int* arrayA = ArrayA(n, array);
     puts("Массив А: ");
     PrintArray(arrayA, n);
     free(array);
@@ -168,7 +170,7 @@ int DInput(void)
     return value;
 }
 
-int DPositiveInput(void)
+size_t DPositiveInput(void)
 {
     int value = DInput();
     if(value <= 0)
@@ -176,10 +178,21 @@ int DPositiveInput(void)
         puts("Не является целым положительным числом");
         exit(EXIT_FAILURE);
     }
+    return (size_t) value;
+}
+
+int DKInput(void)
+{
+    int value = DInput();
+    if (value < 0 || value > 9)
+    {
+        puts("Неверное значение k");
+        exit(EXIT_FAILURE);
+    }
     return value;
 }
 
-int *CreateArray(const int n)
+int *CreateArray(const size_t n)
 {
     int* array = (int*)malloc(n * sizeof(int));
     if (array == NULL)
@@ -190,7 +203,7 @@ int *CreateArray(const int n)
     return array;
 }
 
-void FillRandom(int *array, const int n, const int max, const int min)
+void FillRandom(int *array, const size_t n, const int max, const int min)
 {
     srand(time(NULL));
     for (size_t i = 0; i < n; i++)
@@ -199,7 +212,7 @@ void FillRandom(int *array, const int n, const int max, const int min)
     }
 }
 
-void FillManually(int *array, const int n)
+void FillManually(int *array, const size_t n)
 {
     for (size_t i = 0; i < n; i++)
     {
@@ -208,7 +221,7 @@ void FillManually(int *array, const int n)
     }
 }
 
-void PrintArray(int *array, const int n)
+void PrintArray(const int *array, const size_t n)
 {
     for (size_t i = 0; i < n; i++) 
     {
@@ -218,7 +231,7 @@ void PrintArray(int *array, const int n)
 
 }
 
-int FindMaxAbs(int* array, int n)
+int FindMaxAbs(const int* array, const size_t n)
 {
     int maxabs = abs(array[0]);
     for (size_t i = 1; i<n; i++)
@@ -231,7 +244,7 @@ int FindMaxAbs(int* array, int n)
     return maxabs;
 }
 
-int* ReplacePenult(int* array, const int n)
+int* ReplacePenult(const int* array, const size_t n)
 {
     if (n<2)
     {
@@ -248,7 +261,7 @@ int* ReplacePenult(int* array, const int n)
     return newarray;
 }
 
-int *AddKInArray(int *array, const int n, const int k)
+int *AddKInArray(const int *array, const size_t n, const int k)
 {
     int* newarray = CreateArray(n+(HowManyK(array, n, k)*2));
     size_t newindex = 0;
@@ -256,23 +269,19 @@ int *AddKInArray(int *array, const int n, const int k)
     {
         if (abs(array[i]) % 10 == k) 
         {
-            newarray[newindex] = k;
-            newindex++;
-            newarray[newindex] = array[i];
-            newindex++;
-            newarray[newindex] = k;
-            newindex++;
+            newarray[newindex++] = k;
+            newarray[newindex++] = array[i];
+            newarray[newindex++] = k;
         }
         else
         {
-            newarray[newindex] = array[i];
-            newindex++;
+            newarray[newindex++] = array[i];
         }
     }
     return newarray;
 }
 
-int HowManyK(int *array, const int n, const int k)
+int HowManyK(const int *array, const size_t n, const int k)
 {
     int count = 0;
     for (size_t i = 0; i < n; i++)
@@ -285,7 +294,7 @@ int HowManyK(int *array, const int n, const int k)
     return count;
 }
 
-int* ArrayA(const int n, int* array)
+int* ArrayA(const size_t n, const int* array)
 {
    int* arrayA = CreateArray(n);
    for (size_t i = 0; i<n; i++)
