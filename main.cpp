@@ -11,6 +11,13 @@
 double getCoordinate(std::string message);
 
 /**
+ * @brief Функция получения точки
+ * @param point_name Сообщение для вывода с названием вводимой точки
+ * @return Объект точки Point с введенными координатами
+ */
+Point getPoint(std::string point_name);
+
+/**
  * @brief точка входа в программу
  * @return 0 в случае успеха
  */
@@ -19,21 +26,10 @@ int main()
     setlocale(LC_ALL, "Russian");
     try
     {
-    auto x = getCoordinate("Введите координату x: ");
-    auto y = getCoordinate("Введите координату y: ");
-    Point point1(x, y);
-
-    x = getCoordinate("Введите координату x: ");
-    y = getCoordinate("Введите координату y: ");
-    Point point2(x, y);
-
-    x = getCoordinate("Введите координату x: ");
-    y = getCoordinate("Введите координату y: ");
-    Point point3(x, y);
-
-    x = getCoordinate("Введите координату x: ");
-    y = getCoordinate("Введите координату y: ");
-    Point point4(x, y);
+    Point point1 = getPoint("1(левый нижняя вершина)");
+    Point point2 = getPoint("2(левый верхняя вершина)");
+    Point point3 = getPoint("3(правая верхняя вершина)");
+    Point point4 = getPoint("4(правая нижняя вершина)");
 
     Rectangle rectangle(point1, point2, point3, point4);
     std::cout << "Периметр равен " << rectangle.perimetr() << std::endl;
@@ -59,4 +55,12 @@ double getCoordinate(std::string message)
         throw std::invalid_argument("Введено некорректное значение");
     }
     return coordinate;
+}
+
+Point getPoint(std::string point_name)
+{
+    std::cout << "\n Ввод точки " << point_name << std::endl;
+    double x = getCoordinate("Введите координату x: ");
+    double y = getCoordinate("Введите координату y: ");
+    return Point(x, y);
 }

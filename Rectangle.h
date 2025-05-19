@@ -2,18 +2,26 @@
 #include "Point.h"
 /**
  * @brief Класс, представляющий прямоугольник в двумерном пространстве
+ * @param point1 левая нижняя вершина
+ * @param point2 левая верхняя вершина
+ * @param point3 правая верхняя вершина
+ * @param point4 правая нижняя вершина
+ * @param side1 длина м-ду p1 и p2
+ * @param side2 длина м-ду p2 и p3
+ * @param side3 длина м-ду p3 и p4
+ * @param side4 длина м-ду p4 и p1
  */
 class Rectangle
 {
 private:
-	Point point1;//левая нижняя вершина
-	Point point2;//левая верхняя вершина
-	Point point3;//правая верхняя вершина
-	Point point4;//правая нижняя вершина
-	double side1;//длина м-ду p1 и p2
-	double side2;//длина м-ду p2 и p3
-	double side3;////длина м-ду p3 и p4
-	double side4;//длина м-ду p4 и p1
+	Point point1;
+	Point point2;
+	Point point3;
+	Point point4;
+	double side1;
+	double side2;
+	double side3;
+	double side4;
 	/**
      * @brief Вычисляет расстояние между двумя точками
      * @param p1 Первая точка
