@@ -1,5 +1,4 @@
 #pragma once
-#include "Node.h"
 #include <initializer_list>
 #include <string>
 
@@ -10,6 +9,22 @@
  */
 class LinkedList {
 private:
+    /**
+    * @brief Структура узла односвязного списка.
+    * @param value Целочисленное значение, хранящееся в узле
+    * @param next Указатель на следующий узел в списке
+    */
+    struct Node {
+        int value; 
+        Node* next; 
+
+        /**
+        * @brief Конструктор узла.
+        * @param val Значение узла.
+        * @param nxt Указатель на следующий узел (по умолчанию nullptr).
+        */
+        Node(int val, Node* nxt = nullptr) : value(val), next(nxt) {}
+    };
     Node* head; 
     size_t size; 
 
@@ -39,6 +54,7 @@ public:
     ~LinkedList(); 
 
     /**
+
      * @brief Оператор присваивания копированием
      * @param other Ссылка на копируемый список
      * @return Ссылка на текущий объект
