@@ -1,6 +1,4 @@
-﻿// GeometryTests.cpp
-#include "pch.h"
-#include "CppUnitTest.h"
+﻿#include "CppUnitTest.h"
 #include "Point.h"
 #include "Square.h"
 #include "Polygon.h"
