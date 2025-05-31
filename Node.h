@@ -2,6 +2,8 @@
 
 /**
  * @brief Структура узла односвязного списка.
+ * @param value Целочисленное значение, хранящееся в узле
+ * @param next Указатель на следующий узел в списке
  */
 struct Node {
     int value; 
@@ -14,3 +16,4 @@ struct Node {
      */
     Node(int val, Node* nxt = nullptr);
 };
+
