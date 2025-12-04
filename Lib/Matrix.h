@@ -13,14 +13,14 @@ private:
     const void is_this_matrix(const Matrix& other) const;
 public:
     Matrix(): size(0){};
-    explicit Matrix(size_t size): size(size), data(std::make_unique<int[]>(size)){};
+    explicit Matrix(const size_t size): size(size), data(std::make_unique<int[]>(size)){};
     Matrix(const Matrix& other);
     Matrix(Matrix&& other) noexcept = default;
     Matrix& operator=(const Matrix& other);
     Matrix& operator=(Matrix&& other) noexcept = default;
     ~Matrix() = default;
-    int& operator[](size_t index);
-    const int& operator[](size_t index) const;
+    int& operator[](const size_t index);
+    const int& operator[](const size_t index) const;
     size_t get_size() const;
     const std::string get_string() const; 
 };
