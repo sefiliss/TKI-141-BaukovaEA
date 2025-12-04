@@ -2,10 +2,9 @@
 #include <cmath>
 #include <iostream>
 
-Task_3::Task_3(std::unique_ptr<Matrix> matrix, std::unique_ptr<Generator> generator)
+Task_3::Task_3(std::unique_ptr<Matrix> matrix, std::unique_ptr<Generator> generator) : Exercise(std::move(matrix), std::move(generator))
 {
-    this->matrix = std::move(matrix);
-    this->generator = std::move(generator);
+    
 }
 
 void Task_3::Task()

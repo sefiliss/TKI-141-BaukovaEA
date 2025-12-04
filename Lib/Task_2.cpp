@@ -2,12 +2,9 @@
 #include <stdexcept>
 #include <iostream>
 
-Task_2::Task_2(std::unique_ptr<Matrix> matrix, std::unique_ptr<Generator> generator, size_t from, size_t to)
+Task_2::Task_2(std::unique_ptr<Matrix> matrix, std::unique_ptr<Generator> generator, size_t from, size_t to): Exercise(std::move(matrix), std::move(generator)), from(from), to(to)
 {
-    this->matrix = std::move(matrix);
-    this->generator = std::move(generator);
-    this->from = from;
-    this->to = to;
+    
 }
 
 void Task_2::Task()
