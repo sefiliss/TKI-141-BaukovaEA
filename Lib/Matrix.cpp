@@ -5,7 +5,7 @@ Matrix::Matrix(const Matrix& other)
 {
     data = std::make_unique<int[]>(other.size);
     size = other.size;
-    for(const size_t i = 0; i < size; i++)
+    for(size_t i = 0; i < size; i++)
     {
         data[i] = other[i];
     }
