@@ -1,7 +1,9 @@
-#pragma once 
+#pragma once
+#include <iostream>
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <limits>
 #include "Generator.h"
 
 typedef enum{
@@ -10,7 +12,7 @@ typedef enum{
     constant,
 }choose;
 
-
+int positive_input();
 
 class Matrix
 {
@@ -32,3 +34,7 @@ public:
     size_t get_size() const;
     const std::string get_string() const;
 };
+
+
+
+

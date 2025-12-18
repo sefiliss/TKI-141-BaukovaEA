@@ -89,3 +89,28 @@ const void Matrix::is_this_matrix(const Matrix& other) const
         throw std::domain_error("Error");
     }
 }
+
+
+
+int positive_input()
+{
+    int number = 0;
+
+    if (std::cin >> number)
+    {
+        if (number > 0)
+        {
+            return number;
+        }
+        else 
+        {
+            std::cout << "Ошибка: число должно быть положительным.\n";
+            exit(1);
+        }
+    }
+    else {
+        std::cout << "Ошибка. Введено не число.";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+}
