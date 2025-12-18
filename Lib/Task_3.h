@@ -4,6 +4,6 @@
 class Task_3: public Exercise
 {
 public:
-    Task_3(std::unique_ptr<Matrix> matrix, std::unique_ptr<Generator> generator);
+    Task_3(std::unique_ptr<Matrix> matrix);
     void Task() override;
 };

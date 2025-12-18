@@ -30,7 +30,7 @@ Matrix& Matrix::operator=(const Matrix& other)
     return *this;
 }
 
-int& Matrix::operator[](const size_t index)
+int& Matrix::operator[](size_t index)
 {
     if(index >= size)
     {
@@ -40,7 +40,7 @@ int& Matrix::operator[](const size_t index)
     return data[index];
 }
 
-const int& Matrix::operator[](const size_t index) const
+const int& Matrix::operator[](size_t index) const
 {
     if(index >= size)
     {

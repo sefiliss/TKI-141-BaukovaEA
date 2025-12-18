@@ -2,34 +2,48 @@
 #include <stdexcept>
 #include <iostream>
 
-Task_2::Task_2(std::unique_ptr<Matrix> matrix, std::unique_ptr<Generator> generator, size_t from, size_t to): Exercise(std::move(matrix), std::move(generator)), from(from), to(to)
+Task_2::Task_2(std::unique_ptr<Matrix> matrix, size_t from, size_t to): Exercise(std::move(matrix)), from(from), to(to)
 {
     
 }
 
 void Task_2::Task()
 {
+    if(generator == nullptr)
+    {
+        exit(1);
+    }
+
+    std::cout << "Matrix before:\n" << matrix->get_string() << std::endl;
     int count_delete = 0;
 
     for(size_t i = from; i < to; i++)
     {
         if((*matrix)[i] % 7 == 0)
         {
-            delete_element(i);
+            (*matrix)[i] = NULL;
             count_delete += 1;
         }
     }
 
-    for(size_t i = 0; i <= count_delete; i++)
-    {
-        (*matrix)[matrix->get_size() - i] = 0;
-    }
+    delete_element(count_delete);
+
+    std::cout << "Matrix after:\n" << matrix->get_string() << std::endl;
 }
 
-void Task_2::delete_element(size_t index)
+void Task_2::delete_element(const size_t count_delete)
 {
-    for(size_t i = index; i < this->matrix->get_size() - 1; i++)
+    std::unique_ptr<Matrix> new_matrix = std::make_unique<Matrix>(matrix->get_size() - count_delete);
+    for(size_t i = 0; i < matrix->get_size(); i++)
     {
-        (*matrix)[i] = (*matrix)[i+1];
+        size_t new_matrix_index = 0;
+
+        if((*matrix)[i] != NULL)
+        {
+            (*new_matrix)[new_matrix_index] = (*matrix)[i];
+            new_matrix_index += 1;
+        }
     }
+
+    matrix = std::move(new_matrix);
 }

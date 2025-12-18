@@ -2,6 +2,13 @@
 
 void Task_1::Task()
 {
+    if(generator == nullptr)
+    {
+        exit(1);
+    }
+
+    std::cout << "Matrix before:\n" << matrix->get_string() << std::endl;
+
     try{
         int& a = find_negative();
         int& b = find_positive();
@@ -9,6 +16,8 @@ void Task_1::Task()
         a = a ^ b;
         b = a ^ b;
         a = a ^ b;
+
+        std::cout << "Matrix after:\n" << matrix->get_string() << std::endl;
     }
     catch(const std::exception& e)
     {

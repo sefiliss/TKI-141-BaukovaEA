@@ -3,7 +3,7 @@
 class Generator
 {
 public:
-    Generator()=default;
+    Generator();
     virtual int generate() = 0;
     virtual ~Generator() = default;
 };

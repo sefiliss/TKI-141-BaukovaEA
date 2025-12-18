@@ -4,6 +4,14 @@
 #include <string>
 #include "Generator.h"
 
+typedef enum{
+    manual = 1,
+    randm,
+    constant,
+}choose;
+
+
+
 class Matrix
 {
 private:
@@ -22,5 +30,5 @@ public:
     int& operator[](const size_t index);
     const int& operator[](const size_t index) const;
     size_t get_size() const;
-    const std::string get_string() const; 
+    const std::string get_string() const;
 };
