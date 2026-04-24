@@ -2,6 +2,10 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <iterator>
+#include <string>
+#include <sstream>
+#include <iterator>
 
 using namespace std;
 
@@ -22,6 +26,7 @@ int main() {
 
     cout << "Введите количество векторов N (> 0): ";
     cin >> N;
+    cin.ignore();
     
     if (N <= 0) {
         cout << "Количество векторов должно быть больше 0" << endl;
@@ -55,21 +60,12 @@ int main() {
  * @param name Имя вектора
  */
 void inputVector(vector<int>& vec, const string& name) {
-    int size, value;
+    cout << "Введите вектор " << name << ": ";
     
-    cout << "Введите размер вектора " << name << ": ";
-    cin >> size;
-    
-    if (size < 0) {
-        cout << "Размер не может быть отрицательным" << endl;
-        return;
-    }
-    
-    cout << "Введите " << size << " целых чисел для " << name << ": ";
-    for (int i = 0; i < size; i++) {
-        cin >> value;
-        vec.push_back(value);
-    }
+    string line;
+    getline(cin, line);
+    istringstream iss(line);
+    vec.assign(istream_iterator<int>(iss), istream_iterator<int>());
 }
 
 /**
