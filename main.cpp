@@ -14,10 +14,14 @@ void printResult(const vector<int>& vec);
 
 /**
  * @brief Функциональный объект для сравнения модулей чисел
- * 
- * @return true, если |a| < |b|.
  */
 struct less_abs : public binary_function<int, int, bool> {
+    /**
+     * @brief Сравнивает два числа по модулю
+     * @param a Первое число
+     * @param b Второе число
+     * @return true, если |a| < |b|, иначе false
+     */
     bool operator()(int a, int b) const {
         return abs(a) < abs(b);
     }
@@ -37,7 +41,7 @@ int main() {
 }
 
 /**
- * @brief Вводит элементы вектора из одной строки
+ * @brief Считывает элементы вектора из одной строки ввода
  * @param vec Ссылка на вектор для заполнения
  */
 void inputVector(vector<int>& vec) {
@@ -51,7 +55,7 @@ void inputVector(vector<int>& vec) {
 }
 
 /**
- * @brief Находит первую соседнюю пару элементов, для которой |a| >= |b|
+ * @brief Находит и выводит первую соседнюю пару элементов, для которой |a| >= |b|
  * @param vec Исходный вектор
  */
 void printResult(const vector<int>& vec) {
