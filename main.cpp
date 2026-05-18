@@ -9,7 +9,17 @@
 
 using namespace std;
 
+
+/**
+ * @brief Считывает элементы вектора из одной строки ввода
+ * @param vec Ссылка на вектор для заполнения
+ */
 void inputVector(vector<int>& vec);
+
+/**
+ * @brief Находит и выводит первую соседнюю пару элементов, для которой |a| >= |b|
+ * @param vec Исходный вектор
+ */
 void printResult(const vector<int>& vec);
 
 /**
@@ -22,7 +32,7 @@ struct less_abs : public binary_function<int, int, bool> {
      * @param b Второе число
      * @return true, если |a| < |b|, иначе false
      */
-    bool operator()(int a, int b) const {
+    bool operator()(const int a, const int b) const {
         return abs(a) < abs(b);
     }
 };
@@ -40,10 +50,6 @@ int main() {
     return 0;
 }
 
-/**
- * @brief Считывает элементы вектора из одной строки ввода
- * @param vec Ссылка на вектор для заполнения
- */
 void inputVector(vector<int>& vec) {
     cout << "Введите элементы вектора через пробел: ";
 
@@ -54,10 +60,6 @@ void inputVector(vector<int>& vec) {
     vec.assign(istream_iterator<int>(iss), istream_iterator<int>());
 }
 
-/**
- * @brief Находит и выводит первую соседнюю пару элементов, для которой |a| >= |b|
- * @param vec Исходный вектор
- */
 void printResult(const vector<int>& vec) {
     if (vec.size() < 2) {
         cout << 0 << endl;
